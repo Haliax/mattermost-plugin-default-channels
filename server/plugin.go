@@ -8,6 +8,13 @@ import (
 	"github.com/mattermost/mattermost/server/public/plugin"
 )
 
+// ToDo: Add users to channel on login.
+// ToDo: Add users to channel on configuration change.
+// ToDo: Add users to channel on activate.
+// ToDo: Periodically add users to channel.
+// ToDo: Prevent users from leaving the channel.
+// ToDo: Create 'add all to channel' command.
+
 // Plugin implements the interface expected by the Mattermost server to communicate between the server and plugin processes.
 type Plugin struct {
 	plugin.MattermostPlugin
