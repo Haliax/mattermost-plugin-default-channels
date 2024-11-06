@@ -21,5 +21,5 @@ func (p *Plugin) UserHasJoinedTeam(c *plugin.Context, teamMember *model.TeamMemb
 		return
 	}
 
-	p.addToAllDefaultChannels(user)
+	p.addToAllDefaultChannels(user, false)
 }
