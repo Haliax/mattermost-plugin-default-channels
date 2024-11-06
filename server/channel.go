@@ -35,5 +35,10 @@ func (p *Plugin) UserHasLeftChannel(c *plugin.Context, channelMember *model.Chan
 	msg := fmt.Sprintf("UserHasLeftChannel: @%s, ~%s", user.Username, channel.Name)
 	p.API.LogInfo(msg)
 
-	// ToDo: Check if the channel was a default channel and add the user again.
+	isDefaultChannel := p.isDefaultChannelForUser(channel, user)
+	if !isDefaultChannel {
+		return
+	}
+
+	p.addUserToDefaultChannel(channel, user, true)
 }

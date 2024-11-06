@@ -1,14 +1,14 @@
 package main
 
 import (
+	"fmt"
+	"net/http"
 	"sync"
 
 	"github.com/mattermost/mattermost/server/public/plugin"
 )
 
 // ToDo: Periodically add users to channel.
-
-// ToDo: Prevent users from leaving the channel.
 // ToDo: Create 'add all to channel' command.
 
 // Plugin implements the interface expected by the Mattermost server to communicate between the server and plugin processes.
@@ -26,10 +26,12 @@ type Plugin struct {
 	botID string
 }
 
+// ServeHTTP demonstrates a plugin that handles HTTP requests by greeting the world.
+func (p *Plugin) ServeHTTP(c *plugin.Context, w http.ResponseWriter, r *http.Request) {
+	fmt.Fprint(w, "Hello, world!")
+}
+
 // OnActivate is invoked when the plugin is activated.
-//
-// This demo implementation logs a message to the demo channel whenever the plugin is activated.
-// It also creates a demo bot account
 func (p *Plugin) OnActivate() error {
 	p.addAllUsersToDefaultChannels()
 	return nil

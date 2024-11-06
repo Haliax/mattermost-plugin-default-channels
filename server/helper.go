@@ -1,8 +1,10 @@
 package main
 
-import "github.com/mattermost/mattermost/server/public/model"
+import (
+	"github.com/mattermost/mattermost/server/public/model"
+)
 
-func (p *Plugin) isDefaultChannel(channel *model.Channel, user *model.User) bool {
+func (p *Plugin) isDefaultChannelForUser(channel *model.Channel, user *model.User) bool {
 	configuration := p.getConfiguration()
 	if configuration.memberChannelIDs == nil {
 		return false
@@ -28,11 +30,11 @@ func (p *Plugin) addAllUsersToDefaultChannels() {
 	}
 
 	for _, user := range users {
-		p.addToAllDefaultChannels(user)
+		p.addToAllDefaultChannels(user, false)
 	}
 }
 
-func (p *Plugin) addToAllDefaultChannels(user *model.User) {
+func (p *Plugin) addToAllDefaultChannels(user *model.User, silent bool) {
 	configuration := p.getConfiguration()
 
 	if user.IsGuest() {
@@ -43,7 +45,7 @@ func (p *Plugin) addToAllDefaultChannels(user *model.User) {
 					continue
 				}
 
-				if p.addUserToDefaultChannel(channel, user) {
+				if p.addUserToDefaultChannel(channel, user, silent) {
 					configuration.guestChannelIDs[teamID] = append(channelIDs, channelID)
 				}
 			}
@@ -57,20 +59,26 @@ func (p *Plugin) addToAllDefaultChannels(user *model.User) {
 			if err != nil {
 				continue
 			}
-			if p.addUserToDefaultChannel(channel, user) {
+			if p.addUserToDefaultChannel(channel, user, silent) {
 				configuration.memberChannelIDs[teamID] = append(channelIDs, channelID)
 			}
 		}
 	}
 }
 
-func (p *Plugin) addUserToDefaultChannel(channel *model.Channel, user *model.User) bool {
+func (p *Plugin) addUserToDefaultChannel(channel *model.Channel, user *model.User, silent bool) bool {
 	team, err := p.API.GetTeam(channel.TeamId)
 	if err != nil {
 		return false
 	}
 
 	p.ensureTeamMembership(team.Id, user.Id)
+
+	if silent {
+		_, err = p.API.AddChannelMember(channel.Id, user.Id)
+		return err != nil
+	}
+
 	_, err = p.API.AddUserToChannel(channel.Id, user.Id, p.botID)
 	return err != nil
 }
