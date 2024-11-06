@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/mattermost/mattermost/server/public/model"
 	"reflect"
 	"strings"
 
@@ -24,6 +25,9 @@ type configuration struct {
 
 	// A list of channels to which guests are automatically added.
 	GuestChannelNames string
+
+	// demoUserID is the id of the user specified above.
+	demoUserID string
 
 	// memberChannelIDs maps team ids to the channel ids.
 	memberChannelIDs map[string][]string
@@ -136,11 +140,24 @@ func (p *Plugin) OnConfigurationChange() error {
 		return errors.Wrap(err, "failed to load plugin configuration")
 	}
 
+	botID, ensureBotError := p.API.EnsureBotUser(&model.Bot{
+		Username:    "default-channel-bot",
+		DisplayName: "Default Channel Bot",
+		Description: "A bot ensuring you are in all default channels.",
+	})
+	if ensureBotError != nil {
+		return errors.Wrap(ensureBotError, "failed to ensure default channel bot")
+	}
+
+	p.botID = botID
+
 	// Extract list of channels for each team.
 	configuration.memberChannelIDs = p.generateChannelList(configuration.MemberChannelNames)
 	configuration.guestChannelIDs = p.generateChannelList(configuration.GuestChannelNames)
 
 	p.setConfiguration(configuration)
+
+	// ToDo: Update the default channels for all users.
 
 	return nil
 }

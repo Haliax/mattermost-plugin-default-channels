@@ -8,10 +8,10 @@ import (
 	"github.com/mattermost/mattermost/server/public/plugin"
 )
 
-// ToDo: Add users to channel on login.
 // ToDo: Add users to channel on configuration change.
 // ToDo: Add users to channel on activate.
 // ToDo: Periodically add users to channel.
+
 // ToDo: Prevent users from leaving the channel.
 // ToDo: Create 'add all to channel' command.
 
@@ -25,6 +25,9 @@ type Plugin struct {
 	// configuration is the active plugin configuration. Consult getConfiguration and
 	// setConfiguration for usage.
 	configuration *configuration
+
+	// BotId of the created bot account.
+	botID string
 }
 
 // ServeHTTP demonstrates a plugin that handles HTTP requests by greeting the world.

@@ -7,7 +7,7 @@ import (
 
 // UserHasLoggedIn is invoked after a user has logged in.
 func (p *Plugin) UserHasLoggedIn(c *plugin.Context, user *model.User) {
-	// ToDo: Add the user to all default channels of the teams they are a member of.
+	p.addToAllDefaultChannels(user)
 }
 
 // UserHasBeenCreated is invoked when a new user is created.
