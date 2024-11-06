@@ -15,6 +15,23 @@ func (p *Plugin) isDefaultChannel(channel *model.Channel, user *model.User) bool
 	return contains(configuration.memberChannelIDs[channel.TeamId], channel.Id)
 }
 
+func (p *Plugin) addAllUsersToDefaultChannels() {
+	// Get all users of mattermost instance via API without pag
+	users, err := p.API.GetUsers(&model.UserGetOptions{
+		Page:    0,
+		PerPage: 99999,
+		Active:  true,
+	})
+	if err != nil {
+		p.API.LogError("Failed to get users", "error", err.Error())
+		return
+	}
+
+	for _, user := range users {
+		p.addToAllDefaultChannels(user)
+	}
+}
+
 func (p *Plugin) addToAllDefaultChannels(user *model.User) {
 	configuration := p.getConfiguration()
 

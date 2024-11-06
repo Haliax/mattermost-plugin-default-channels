@@ -157,7 +157,7 @@ func (p *Plugin) OnConfigurationChange() error {
 
 	p.setConfiguration(configuration)
 
-	// ToDo: Update the default channels for all users.
+	p.addAllUsersToDefaultChannels()
 
 	return nil
 }
