@@ -1,11 +1,11 @@
 {
     "id": "ms.b-side.plugin-default-channels",
     "name": "Default Channels",
-    "description": "Automatically adding users to predefined channels.",
+    "description": "Automatically adding users and guests to predefined channels.",
     "homepage_url": "https://github.com/Haliax/mattermost-plugin-default-channels",
     "support_url": "https://github.com/Haliax/mattermost-plugin-default-channels/issues",
     "icon_path": "assets/starter-template-icon.svg",
-    "version": "0.1.3",
+    "version": "0.1.4",
     "min_server_version": "10.0.0",
     "server": {
         "executables": {

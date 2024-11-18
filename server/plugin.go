@@ -2,14 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 	"net/http"
 	"sync"
 
 	"github.com/mattermost/mattermost/server/public/plugin"
 )
-
-// ToDo: Periodically add users to channel.
-// ToDo: Create 'add all to channel' command.
 
 // Plugin implements the interface expected by the Mattermost server to communicate between the server and plugin processes.
 type Plugin struct {
@@ -33,6 +31,11 @@ func (p *Plugin) ServeHTTP(c *plugin.Context, w http.ResponseWriter, r *http.Req
 
 // OnActivate is invoked when the plugin is activated.
 func (p *Plugin) OnActivate() error {
+
+	if err := p.registerCommands(); err != nil {
+		return errors.Wrap(err, "failed to register commands")
+	}
+
 	p.addAllUsersToDefaultChannels()
 	return nil
 }
