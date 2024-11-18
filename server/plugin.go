@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/pkg/errors"
 	"net/http"
 	"sync"
 
@@ -18,11 +19,25 @@ type Plugin struct {
 	// configuration is the active plugin configuration. Consult getConfiguration and
 	// setConfiguration for usage.
 	configuration *configuration
+
+	// BotId of the created bot account.
+	botID string
 }
 
 // ServeHTTP demonstrates a plugin that handles HTTP requests by greeting the world.
 func (p *Plugin) ServeHTTP(c *plugin.Context, w http.ResponseWriter, r *http.Request) {
 	fmt.Fprint(w, "Hello, world!")
+}
+
+// OnActivate is invoked when the plugin is activated.
+func (p *Plugin) OnActivate() error {
+
+	if err := p.registerCommands(); err != nil {
+		return errors.Wrap(err, "failed to register commands")
+	}
+
+	p.addAllUsersToDefaultChannels()
+	return nil
 }
 
 // See https://developers.mattermost.com/extend/plugins/server/reference/

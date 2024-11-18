@@ -1,11 +1,12 @@
 {
-    "id": "com.mattermost.plugin-starter-template",
-    "name": "Plugin Starter Template",
-    "description": "This plugin serves as a starting point for writing a Mattermost plugin.",
-    "homepage_url": "https://github.com/mattermost/mattermost-plugin-starter-template",
-    "support_url": "https://github.com/mattermost/mattermost-plugin-starter-template/issues",
+    "id": "ms.b-side.plugin-default-channels",
+    "name": "Default Channels",
+    "description": "Automatically adding users and guests to predefined channels.",
+    "homepage_url": "https://github.com/Haliax/mattermost-plugin-default-channels",
+    "support_url": "https://github.com/Haliax/mattermost-plugin-default-channels/issues",
     "icon_path": "assets/starter-template-icon.svg",
-    "min_server_version": "6.2.1",
+    "version": "0.1.4",
+    "min_server_version": "10.0.0",
     "server": {
         "executables": {
             "linux-amd64": "server/dist/plugin-linux-amd64",
@@ -21,6 +22,23 @@
     "settings_schema": {
         "header": "",
         "footer": "",
-        "settings": []
+        "settings": [
+          {
+            "key": "MemberChannelNames",
+            "display_name": "Default Channels for Users:",
+            "type": "text",
+            "help_text": "Comma separated list of channels all users will be added to.",
+            "placeholder": "team:channel",
+            "default": ""
+          },
+          {
+            "key": "GuestChannelNames",
+            "display_name": "Default Channels for Guests:",
+            "type": "text",
+            "help_text": "Comma separated list of channels all guests will be added to.",
+            "placeholder": "team:channel",
+            "default": ""
+          }
+        ]
     }
 }
