@@ -10,8 +10,6 @@ import (
 // UserHasLeftChannel is invoked after the membership has been removed from the database. If
 // actor is not nil, the user was removed from the channel by the actor.
 func (p *Plugin) UserHasLeftChannel(c *plugin.Context, channelMember *model.ChannelMember, actor *model.User) {
-	// ToDo: Is a disabled check necessary?
-
 	user, err := p.API.GetUser(channelMember.UserId)
 	if err != nil {
 		p.API.LogError(

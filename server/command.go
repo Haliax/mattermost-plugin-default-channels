@@ -14,7 +14,6 @@ const (
 )
 
 func (p *Plugin) registerCommands() error {
-
 	if err := p.API.RegisterCommand(&model.Command{
 		Trigger:          commandTriggerHooks,
 		AutoComplete:     true,
