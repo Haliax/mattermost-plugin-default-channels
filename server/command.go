@@ -47,10 +47,10 @@ func (p *Plugin) executeCommandHooks(args *model.CommandArgs) *model.CommandResp
 	if err != nil || !user.IsSystemAdmin() {
 		return &model.CommandResponse{
 			ResponseType: model.CommandResponseTypeEphemeral,
-			Text:         fmt.Sprintf("You must be a system administrator to run this command."),
+			Text:         "You must be a system administrator to run this command.",
 		}
 	}
-
+	
 	p.addAllUsersToDefaultChannels()
 
 	_ = p.API.SendEphemeralPost(args.UserId, &model.Post{
