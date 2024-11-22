@@ -1,9 +1,10 @@
 package main
 
 import (
-	"github.com/mattermost/mattermost/server/public/model"
 	"reflect"
 	"strings"
+
+	"github.com/mattermost/mattermost/server/public/model"
 
 	"github.com/pkg/errors"
 )

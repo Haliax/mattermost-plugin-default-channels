@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"net/http"
 	"sync"
+
+	"github.com/pkg/errors"
 
 	"github.com/mattermost/mattermost/server/public/plugin"
 )
