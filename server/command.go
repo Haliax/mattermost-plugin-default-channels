@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
 	"github.com/pkg/errors"
 	"strings"
+
+	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/plugin"
 )
 
 const (
