@@ -1,11 +1,12 @@
 package main
 
 import (
-	"fmt"
+	"strings"
+
+	"github.com/pkg/errors"
+
 	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/pkg/errors"
-	"strings"
 )
 
 const (
@@ -13,7 +14,6 @@ const (
 )
 
 func (p *Plugin) registerCommands() error {
-
 	if err := p.API.RegisterCommand(&model.Command{
 		Trigger:          commandTriggerHooks,
 		AutoComplete:     true,
@@ -36,7 +36,7 @@ func (p *Plugin) ExecuteCommand(c *plugin.Context, args *model.CommandArgs) (*mo
 	default:
 		return &model.CommandResponse{
 			ResponseType: model.CommandResponseTypeEphemeral,
-			Text:         fmt.Sprintf("Unknown command: " + args.Command),
+			Text:         "Unknown command: " + args.Command,
 		}, nil
 	}
 }
@@ -47,7 +47,7 @@ func (p *Plugin) executeCommandHooks(args *model.CommandArgs) *model.CommandResp
 	if err != nil || !user.IsSystemAdmin() {
 		return &model.CommandResponse{
 			ResponseType: model.CommandResponseTypeEphemeral,
-			Text:         fmt.Sprintf("You must be a system administrator to run this command."),
+			Text:         "You must be a system administrator to run this command.",
 		}
 	}
 

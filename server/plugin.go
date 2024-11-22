@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"net/http"
 	"sync"
+
+	"github.com/pkg/errors"
 
 	"github.com/mattermost/mattermost/server/public/plugin"
 )
@@ -31,7 +32,6 @@ func (p *Plugin) ServeHTTP(c *plugin.Context, w http.ResponseWriter, r *http.Req
 
 // OnActivate is invoked when the plugin is activated.
 func (p *Plugin) OnActivate() error {
-
 	if err := p.registerCommands(); err != nil {
 		return errors.Wrap(err, "failed to register commands")
 	}
