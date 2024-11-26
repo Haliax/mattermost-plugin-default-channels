@@ -5,7 +5,7 @@
     "homepage_url": "https://github.com/Haliax/mattermost-plugin-default-channels",
     "support_url": "https://github.com/Haliax/mattermost-plugin-default-channels/issues",
     "icon_path": "assets/starter-template-icon.svg",
-    "version": "0.1.4",
+    "version": "1.0.0",
     "min_server_version": "10.0.0",
     "server": {
         "executables": {
@@ -38,6 +38,13 @@
             "help_text": "Comma separated list of channels all guests will be added to.",
             "placeholder": "team:channel",
             "default": ""
+          },
+          {
+            "key": "AddToTeam",
+            "display_name": "Add users to team if not already a member:",
+            "type": "bool",
+            "help_text": "If set to false, default channels in different teams will be ignored.",
+            "default": false
           }
         ]
     }

@@ -31,7 +31,7 @@ func (p *Plugin) UserHasLeftChannel(c *plugin.Context, channelMember *model.Chan
 	}
 
 	msg := fmt.Sprintf("UserHasLeftChannel: @%s, ~%s", user.Username, channel.Name)
-	p.API.LogInfo(msg)
+	p.API.LogDebug(msg)
 
 	isDefaultChannel := p.isDefaultChannelForUser(channel, user)
 	if !isDefaultChannel {
