@@ -27,6 +27,9 @@ type configuration struct {
 	// A list of channels to which guests are automatically added.
 	GuestChannelNames string
 
+	// If false, ignore teams the users is not a member of.
+	AddToTeam bool
+
 	// demoUserID is the id of the user specified above.
 	demoUserID string
 
@@ -54,6 +57,7 @@ func (c *configuration) Clone() *configuration {
 	return &configuration{
 		MemberChannelNames: c.MemberChannelNames,
 		GuestChannelNames:  c.GuestChannelNames,
+		AddToTeam:          c.AddToTeam,
 		memberChannelIDs:   memberChannelIDs,
 		guestChannelIDs:    guestChannelIDs,
 	}
